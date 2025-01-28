@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TagRepository::class)]
 #[ORM\Table(name: 'tag')]
-final class Tag
+class Tag
 {
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]

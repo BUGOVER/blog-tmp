@@ -15,7 +15,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BlogRepository::class)]
-final class Blog
+class Blog
 {
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]

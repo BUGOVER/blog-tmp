@@ -10,7 +10,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
-final class Category
+class Category
 {
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
