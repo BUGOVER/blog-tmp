@@ -1,0 +1,5 @@
+<?php
+
+declare(strict_types=1); // dev.encrypt.public on Fri, 24 Jan 2025 20:42:43 +0000
+
+return "\xFB\xA1\xA9.~u\xBD1u\x91\x2A\xD0\x9A\x5B\xE56.\x115\xFBU\xE4\x13\x0E\x98\x3A\x1Ch\x09\x87\xFA\x5D";

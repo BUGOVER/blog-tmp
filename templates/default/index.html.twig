@@ -1,0 +1,26 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+  <div class="jumbotron">
+    <div class="container">
+      <h1 class="display-3">{{ 'hello_world'|trans }}</h1>
+      <p>{{ 'this_is_a_template_for_a_simple_marketing_or_infor'|trans }}</p>
+      <p><a class="btn btn-primary btn-lg" href="#" role="button">{{ 'learn_more'|trans }}</a></p>
+    </div>
+  </div>
+  <!-- Example row of columns -->
+  <div class="row">
+    {% for blog in blogs %}
+      <div class="col-md-4">
+        <h2>{{ blog.title }}</h2>
+        <p>{{ blog.text }}</p>
+        {% if is_granted('ROLE_ADMIN') %}
+          <p><a class="btn btn-secondary" href="{{ url('app_blog_show', {'id': blog.id}) }}"
+                role="button">{{ 'view_details'|trans }}</a></p>
+        {% else %}
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+  <hr>
+{% endblock %}

@@ -1,0 +1,28 @@
+; top-most EditorConfig file
+root = true
+
+; Unix-style newlines
+[*]
+charset = utf-8
+end_of_line = LF
+insert_final_newline = true
+trim_trailing_whitespace = true
+tab_width = 4
+indent_size = 4
+
+[*.php]
+indent_style = space
+
+[*.md]
+max_line_length = 80
+tab_width = 2
+
+[*.{html,twig}]
+indent_size = 2
+max_line_length = 120
+tab_width = 2
+
+[*.{yaml,yml,xlf,json}]
+indent_size = 2
+max_line_length = 100
+tab_width = 2

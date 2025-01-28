@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Symfony2PluginSettings">
+    <option name="directoryToApp" value="src" />
+    <option name="pluginEnabled" value="true" />
+    <option name="profilerCsvPath" value="" />
+    <option name="profilerHttpEnabled" value="true" />
+    <option name="profilerHttpUrl" value="https://127.0.0.1:8000" />
+  </component>
+</project>
