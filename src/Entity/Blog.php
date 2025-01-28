@@ -15,16 +15,12 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BlogRepository::class)]
-class Blog
+final class Blog
 {
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     #[ORM\Column]
     private ?int $id = null;
-
-    #[Assert\NotBlank(message: 'Заголовок обязательный к заполнению')]
-    #[ORM\Column(length: 255)]
-    private ?string $title = null;
 
     #[ORM\ManyToOne(targetEntity: Category::class)]
     #[ORM\JoinColumn(name: 'category_id', referencedColumnName: 'id')]
@@ -33,6 +29,10 @@ class Blog
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     private User|null $user = null;
+
+    #[Assert\NotBlank(message: 'Заголовок обязательный к заполнению')]
+    #[ORM\Column(length: 255)]
+    private ?string $title = null;
 
     #[Assert\NotBlank]
     #[ORM\Column(type: Types::TEXT, length: 65000)]

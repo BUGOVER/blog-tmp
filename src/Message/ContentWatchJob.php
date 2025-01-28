@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace App\Message;
 
+use App\Message\Handler\ContentWatchHandler;
+
+/**
+ * @link ContentWatchHandler
+ */
 class ContentWatchJob
 {
     public function __construct(

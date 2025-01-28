@@ -53,10 +53,11 @@ class BlogController extends AbstractController
             return $this->redirectToRoute('app_blog_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('blog/new.html.twig', [
-            'blog' => $blog,
-            'form' => $form,
-        ]);
+        return $this
+            ->render('blog/new.html.twig', [
+                'blog' => $blog,
+                'form' => $form,
+            ]);
     }
 
     #[Route('/{id}', name: 'app_blog_show', methods: ['GET'])]
@@ -79,10 +80,11 @@ class BlogController extends AbstractController
             return $this->redirectToRoute('app_blog_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('blog/edit.html.twig', [
-            'blog' => $blog,
-            'form' => $form,
-        ]);
+        return $this
+            ->render('blog/edit.html.twig', [
+                'blog' => $blog,
+                'form' => $form,
+            ]);
     }
 
     #[Route('/{id}', name: 'app_blog_delete', methods: ['POST'])]

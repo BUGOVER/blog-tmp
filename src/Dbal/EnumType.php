@@ -25,11 +25,6 @@ abstract class EnumType extends Type
         return sprintf('ENUM(%s)', implode(', ', $cases));
     }
 
-    /**
-     * @return class-string
-     */
-    abstract protected function getEnum(): string;
-
     public function requiresSQLCommentHint(AbstractPlatform $platform): bool
     {
         return true;
@@ -45,8 +40,18 @@ abstract class EnumType extends Type
         return is_string($enum) ? $enum : $enum->value;
     }
 
+    public function getMappedDatabaseTypes(AbstractPlatform $platform): array
+    {
+        return [$this->getName()];
+    }
+
     /**
      * @return class-string
      */
     abstract protected function getName(): string;
+
+    /**
+     * @return class-string
+     */
+    abstract protected function getEnum(): string;
 }

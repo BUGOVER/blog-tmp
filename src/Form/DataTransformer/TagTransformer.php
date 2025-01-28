@@ -42,7 +42,7 @@ class TagTransformer implements DataTransformerInterface
             return new ArrayCollection();
         }
 
-        $items = explode(",", $value);
+        $items = explode(',', $value);
         $items = array_map('trim', $items);
         $items = array_unique($items);
 
