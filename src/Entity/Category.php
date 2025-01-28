@@ -10,7 +10,6 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
-#[ORM\HasLifecycleCallbacks]
 class Category
 {
     #[ORM\Id]
@@ -22,12 +21,7 @@ class Category
     private ?string $name = null;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
-    private ?DateTimeImmutable $createdAt = null;
-
-    public function __construct()
-    {
-        $this->createdAt = new DateTimeImmutable();
-    }
+    private ?DateTimeImmutable $createdAt;
 
     public function getId(): ?int
     {
@@ -61,7 +55,7 @@ class Category
         return $this->createdAt;
     }
 
-    public function setCreatedAt(?string $createdAt)
+    public function setCreatedAt(?DateTimeImmutable $createdAt)
     {
         $this->createdAt = $createdAt;
 

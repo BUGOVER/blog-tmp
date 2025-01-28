@@ -18,7 +18,7 @@ abstract class EnumType extends Type
         /* @var Enum $enum */
         $enum = $this->getEnum();
         $cases = array_map(
-            static fn(Enum $enumItem) => "'$enumItem->value'",
+            static fn($enumItem) => "'$enumItem->value'",
             $enum::cases()
         );
 

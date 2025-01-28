@@ -5,6 +5,7 @@ doctrine:
 
     mapping_types:
       enum: string
+
     types:
       blog_status: App\Dbal\Types\PGSQL\BlogStatusType
 

@@ -1,3 +1,5 @@
+/.idea
+/.vale-styles
 
 ###> symfony/framework-bundle ###
 /.env.local

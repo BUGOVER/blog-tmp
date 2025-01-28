@@ -19,7 +19,7 @@ tab_width = 2
 
 [*.{html,twig}]
 indent_size = 2
-max_line_length = 120
+max_line_length = 100
 tab_width = 2
 
 [*.{yaml,yml,xlf,json}]

@@ -33,6 +33,7 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 20; $i++) {
             $user = new User();
             $user->setEmail('user' . $i . '@yandex.ru');
+            $user->setRoles(['ROLE_USER']);
             $password = $this->hasher->hashPassword($user, 'pass_1234');
             $user->setPassword($password);
             $manager->persist($user);

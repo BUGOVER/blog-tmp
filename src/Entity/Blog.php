@@ -6,6 +6,7 @@ namespace App\Entity;
 
 use App\Dbal\EnumTypes\BlogStatus;
 use App\Repository\BlogRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -25,14 +26,6 @@ class Blog
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[Assert\NotBlank]
-    #[ORM\Column(type: Types::TEXT, length: 65000)]
-    private ?string $description = null;
-
-    #[Assert\NotBlank]
-    #[ORM\Column(type: Types::TEXT, length: 65000)]
-    private ?string $text = null;
-
     #[ORM\ManyToOne(targetEntity: Category::class)]
     #[ORM\JoinColumn(name: 'category_id', referencedColumnName: 'id')]
     private Category|null $category = null;
@@ -40,6 +33,14 @@ class Blog
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     private User|null $user = null;
+
+    #[Assert\NotBlank]
+    #[ORM\Column(type: Types::TEXT, length: 65000)]
+    private ?string $description = null;
+
+    #[Assert\NotBlank]
+    #[ORM\Column(type: Types::TEXT, length: 65000)]
+    private ?string $text = null;
 
     #[ORM\JoinTable(name: 'tags_to_blog')]
     #[ORM\JoinColumn(name: 'blog_id', referencedColumnName: 'id')]
@@ -53,9 +54,24 @@ class Blog
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
     private ?int $percent = null;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private DateTime|null $blockedAt;
+
     public function __construct(UserInterface|User $user)
     {
         $this->user = $user;
+    }
+
+    public function getBlockedAt(): ?DateTime
+    {
+        return $this->blockedAt;
+    }
+
+    public function setBlockedAt(?DateTime $blockedAt): Blog
+    {
+        $this->blockedAt = $blockedAt;
+
+        return $this;
     }
 
     public function getStatus(): BlogStatus
