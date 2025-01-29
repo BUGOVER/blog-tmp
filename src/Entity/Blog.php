@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Dbal\EnumTypes\BlogStatus;
+use App\Dbal\Timestamp\Timestampable;
 use App\Repository\BlogRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -15,8 +16,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BlogRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Blog
 {
+    use Timestampable;
+
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     #[ORM\Column]

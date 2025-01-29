@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Dbal\Timestamp\Timestampable;
 use App\Repository\CategoryRepository;
-use DateTimeImmutable;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Category
 {
+    use Timestampable;
+
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     #[ORM\Column]
@@ -19,9 +21,6 @@ class Category
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
-
-    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
-    private ?DateTimeImmutable $createdAt;
 
     public function getId(): ?int
     {
@@ -48,17 +47,5 @@ class Category
     public function __toString(): string
     {
         return $this->name . ' категория';
-    }
-
-    public function getCreatedAt(): ?string
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(?DateTimeImmutable $createdAt)
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
     }
 }

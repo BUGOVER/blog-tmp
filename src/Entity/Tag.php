@@ -4,13 +4,17 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Dbal\Timestamp\Timestampable;
 use App\Repository\TagRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TagRepository::class)]
 #[ORM\Table(name: 'tag')]
+#[ORM\HasLifecycleCallbacks]
 class Tag
 {
+    use Timestampable;
+
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     #[ORM\Column]

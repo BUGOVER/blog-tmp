@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\DataFixtures;
 
+use App\Dbal\EnumTypes\BlogStatus;
 use App\Entity\Blog;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Random\RandomException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
@@ -19,6 +21,7 @@ class AppFixtures extends Fixture
     /**
      * @param ObjectManager $manager
      * @return void
+     * @throws RandomException
      */
     public function load(ObjectManager $manager): void
     {
@@ -48,6 +51,7 @@ class AppFixtures extends Fixture
                     ->setTitle('Blog title ' . $i)
                     ->setPercent(random_int(0, 100))
                     ->setDescription('Blog description ' . $i)
+                    ->setStatus(BlogStatus::active)
                     ->setText('Blog text ' . $i);
                 $manager->persist($blog);
             }
