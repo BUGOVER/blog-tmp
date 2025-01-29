@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use App\Dbal\EnumTypes\BlogStatus;
+use App\Dbal\Type\BlogStatus;
 use App\Dbal\Timestamp\Timestampable;
 use App\Repository\BlogRepository;
 use DateTime;

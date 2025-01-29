@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\DataFixtures;
 
-use App\Dbal\EnumTypes\BlogStatus;
+use App\Dbal\Type\BlogStatus;
 use App\Entity\Blog;
+use App\Entity\Tag;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -25,6 +26,8 @@ class AppFixtures extends Fixture
      */
     public function load(ObjectManager $manager): void
     {
+        ini_set('max_execution_time', 60);
+
         $user = new User();
         $user->setEmail('admin@yandex.ru');
         $user->setRoles(['ROLE_ADMIN']);
@@ -55,6 +58,11 @@ class AppFixtures extends Fixture
                     ->setText('Blog text ' . $i);
                 $manager->persist($blog);
             }
+        }
+
+        for ($i = 0; $i < 10; $i++) {
+            $tag = (new Tag())->setName(generateRandomString(7));
+            $manager->persist($tag);
         }
 
         $manager->flush();

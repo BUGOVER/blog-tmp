@@ -7,7 +7,7 @@ doctrine:
       enum: string
 
     types:
-      blog_status: App\Dbal\Types\PGSQL\BlogStatusType
+      blog_status: App\Dbal\Grammar\PgSql\BlogStatusType
 
   orm:
     auto_generate_proxy_classes: true

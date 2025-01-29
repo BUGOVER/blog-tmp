@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Dbal\Types\PGSQL;
+namespace App\Dbal\Grammar\PgSql;
 
-use App\Dbal\EnumType;
-use App\Dbal\EnumTypes\BlogStatus;
+use App\Dbal\AbstractEnumType;
+use App\Dbal\Type\BlogStatus;
 
-final class BlogStatusType extends EnumType
+final class BlogStatusType extends AbstractEnumType
 {
     private string $typeName = 'blog_status';
 

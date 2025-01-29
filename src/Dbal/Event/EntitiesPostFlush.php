@@ -14,7 +14,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 #[AsDoctrineListener(event: Events::postPersist, priority: 500, connection: 'default')]
 #[AsDoctrineListener(event: Events::postFlush, priority: 500, connection: 'default')]
-class EntitiesPostFLush
+class EntitiesPostFlush
 {
     private array $blogs = [];
 

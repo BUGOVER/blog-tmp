@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Dbal\Event\Blog;
 
-use App\Dbal\EnumTypes\BlogStatus;
+use App\Dbal\Type\BlogStatus;
 use App\Entity\Blog;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;

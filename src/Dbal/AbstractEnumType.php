@@ -11,7 +11,7 @@ use Enum;
 use function is_string;
 use function sprintf;
 
-abstract class EnumType extends Type
+abstract class AbstractEnumType extends Type
 {
     public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
     {

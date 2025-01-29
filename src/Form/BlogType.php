@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form;
 
-use App\Dbal\EnumTypes\BlogStatus;
+use App\Dbal\Type\BlogStatus;
 use App\Entity\Blog;
 use App\Entity\Category;
 use App\Entity\User;

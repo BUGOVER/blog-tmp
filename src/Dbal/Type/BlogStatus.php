@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Dbal\EnumTypes;
+namespace App\Dbal\Type;
 
 enum BlogStatus: string
 {

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Dbal\Event\Migration;
 
-use App\Dbal\EnumTypes\BlogStatus;
-use App\Dbal\Types\PGSQL\BlogStatusType;
+use App\Dbal\Grammar\PgSql\BlogStatusType;
+use App\Dbal\Type\BlogStatus;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\DBAL\Exception;
 use Doctrine\Migrations\Event\MigrationsEventArgs;
