@@ -16,4 +16,4 @@ framework:
       # sync: 'sync://'
 
     routing:
-      App\Message\ContentWatchJob: async
+      App\Message\ContentWatchMessage: async

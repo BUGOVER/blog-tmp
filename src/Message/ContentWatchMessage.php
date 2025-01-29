@@ -9,7 +9,7 @@ use App\Message\Handler\ContentWatchHandler;
 /**
  * @link ContentWatchHandler
  */
-class ContentWatchJob
+class ContentWatchMessage
 {
     public function __construct(
         private readonly int $blogId,

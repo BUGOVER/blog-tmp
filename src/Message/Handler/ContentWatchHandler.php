@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Message\Handler;
 
-use App\Message\ContentWatchJob;
+use App\Message\ContentWatchMessage;
 use App\Repository\BlogRepository;
 use App\Service\ContentWatchApi;
 use Doctrine\ORM\EntityManagerInterface;
@@ -27,11 +27,11 @@ class ContentWatchHandler
     }
 
     /**
-     * @param ContentWatchJob $message
+     * @param ContentWatchMessage $message
      * @return void
      * @throws \JsonException
      */
-    public function __invoke(ContentWatchJob $message): void
+    public function __invoke(ContentWatchMessage $message): void
     {
         $blogId = $message->getBlogId();
         $blog = $this->blogRepository->find($blogId);

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Dbal\Event;
 
 use App\Entity\Blog;
-use App\Message\ContentWatchJob;
+use App\Message\ContentWatchMessage;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
 use Doctrine\ORM\Event\PostFlushEventArgs;
 use Doctrine\ORM\Event\PostPersistEventArgs;
@@ -33,7 +33,7 @@ class EntitiesPostFlush
     {
         /* @var Blog $blog */
         foreach ($this->blogs as $blog) {
-            $this->bus->dispatch(new ContentWatchJob($blog->getId()));
+            $this->bus->dispatch(new ContentWatchMessage($blog->getId()));
         }
     }
 }
