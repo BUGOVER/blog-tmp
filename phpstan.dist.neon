@@ -2,6 +2,7 @@ parameters:
     paths:
         - src
         - tests
+        - migrations
     level: 6
     phpVersion: 80300
     inferPrivatePropertyTypeFromConstructor: true

@@ -124,6 +124,7 @@
 
     <file>src</file>
     <file>tests</file>
+    <file>migrations</file>
 
     <exclude-pattern>*/.phpstorm.meta.php</exclude-pattern>
     <exclude-pattern>*/_ide_helper.php</exclude-pattern>
