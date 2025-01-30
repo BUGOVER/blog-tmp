@@ -20,6 +20,7 @@ services:
       - '../src/Entity/'
       - '../src/Kernel.php'
 
+  #  set prefixes and alias clas bind
   'guzzle.client':
     class: GuzzleHttp\Client
 
