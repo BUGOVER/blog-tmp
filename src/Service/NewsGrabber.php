@@ -9,7 +9,6 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use GuzzleHttp\Client;
-use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Log\LoggerInterface;
 use Random\RandomException;
@@ -39,6 +38,8 @@ class NewsGrabber
      */
     public function importNews(): array
     {
+        $this->logger->info('STARTED');
+
         try {
             $response = $this->client->get(
                 'https://www.engadget.com/news/'
@@ -58,6 +59,8 @@ class NewsGrabber
         });
         unset($crawler);
 
+        $this->logger->info(\sprintf('Get %d texts', count($news)));
+
         foreach ($news as &$item) {
             $response = $this->client->get('https://www.engadget.com' . $item['url']);
             $crawler = new Crawler($response->getBody()->getContents());
@@ -67,6 +70,8 @@ class NewsGrabber
             } catch (Exception $exception) {
                 $this->logger->error($exception->getMessage());
             }
+
+            $this->logger->info(\sprintf('Parsed news %s', $item['title']));
         }
         unset($item);
 
@@ -75,6 +80,8 @@ class NewsGrabber
         } catch (Exception $exception) {
             $this->logger->error($exception->getMessage());
         }
+
+        $this->logger->info('Success end');
 
         return $news;
     }
