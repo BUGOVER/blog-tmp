@@ -20,8 +20,15 @@ services:
       - '../src/Entity/'
       - '../src/Kernel.php'
 
+  'guzzle.client':
+    class: GuzzleHttp\Client
+
   # add more service definitions when explicit configuration is needed
   # please note that last definitions always *replace* previous ones
   App\Service\ContentWatchApi:
     $key: '%env(CONTENT_WATCH_API_KEY)%'
     $translator: '@translator.data_collector'
+
+  App\Service\NewsGrabber:
+    $client: '@guzzle.client'
+
