@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Tests\Kernel\App\Repository;
 
-use App\Factory\BlogFactory;
-use App\Factory\UserFactory;
 use App\Repository\BlogRepository;
+use App\Tests\Factory\BlogFactory;
+use App\Tests\Factory\UserFactory;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Zenstruck\Foundry\Test\Factories;
 use Zenstruck\Foundry\Test\ResetDatabase;
@@ -14,6 +14,7 @@ use Zenstruck\Foundry\Test\ResetDatabase;
 class BlogRepositoryTest extends KernelTestCase
 {
     use Factories;
+
     use ResetDatabase;
 
     public function testSomething(): void

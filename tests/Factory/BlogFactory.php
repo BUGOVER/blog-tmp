@@ -2,15 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Factory;
+namespace App\Tests\Factory;
 
-use App\Entity\User;
+use App\Dbal\Type\BlogStatus;
+use App\Entity\Blog;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
 
 /**
- * @extends PersistentProxyObjectFactory<User>
+ * @extends PersistentProxyObjectFactory<Blog>
  */
-final class UserFactory extends PersistentProxyObjectFactory
+final class BlogFactory extends PersistentProxyObjectFactory
 {
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services
@@ -24,7 +25,7 @@ final class UserFactory extends PersistentProxyObjectFactory
 
     public static function class(): string
     {
-        return User::class;
+        return Blog::class;
     }
 
     /**
@@ -35,10 +36,10 @@ final class UserFactory extends PersistentProxyObjectFactory
     protected function defaults(): array|callable
     {
         return [
-            'email' => self::faker()->text(180),
-            'isVerified' => self::faker()->boolean(),
-            'password' => self::faker()->text(),
-            'roles' => ['ROLE_USER'],
+            'description' => self::faker()->text(65000),
+            'status' => self::faker()->randomElement(BlogStatus::cases()),
+            'text' => self::faker()->text(65000),
+            'title' => self::faker()->text(255),
         ];
     }
 
@@ -47,6 +48,6 @@ final class UserFactory extends PersistentProxyObjectFactory
      */
     protected function initialize(): static
     {
-        return $this;// ->afterInstantiate(function(User $user): void {})
+        return $this;// ->afterInstantiate(function(Blog $blog): void {})
     }
 }

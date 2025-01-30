@@ -27,9 +27,9 @@
     {% for blog in pagination %}
       <tr>
         <td>{{ blog.id }}</td>
-        <td>{{ blog.title }}</td>
-        <td>{{ blog.description | length > 50 ? blog.description | slice(0, 50) ~ '...' : blog.description }}</td>
-        <td>{{ blog.text | length > 50 ? blog.text | slice(0, 50) ~ '...' : blog.text }}</td>
+        <td>{{ blog.title | u.truncate(40, '...') }}</td>
+        <td>{{ blog.description | u.truncate(40, '...') }}</td>
+        <td>{{ blog.text | u.truncate(40, '...') }}</td>
         <td>{{ blog.percent }}</td>
         <td>{% if blog.user %}{{ blog.user.email }}{% endif %}</td>
         <td>{{ blog.status.value }}</td>
@@ -37,6 +37,8 @@
             href="{{ is_granted('ROLE_ADMIN')
             ? path('app_blog_edit', {'id': blog.id})
             : path('app_user_blog_edit', {'id': blog.id}) }}">Edit</a>
+        </td>
+        <td><a href="{{ path('app_blog_show', {'id': blog.id}) }}">Show</a>
         </td>
       </tr>
     {% else %}

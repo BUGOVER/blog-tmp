@@ -12,6 +12,7 @@
     "doctrine/doctrine-bundle": "^2.13",
     "doctrine/doctrine-migrations-bundle": "^3.4.0",
     "doctrine/orm": "^3.3.1",
+    "guzzlehttp/guzzle": "^7.9",
     "kafkiansky/symfony-middleware": "^0.4.0",
     "knplabs/knp-paginator-bundle": "^6.3.0",
     "phpdocumentor/reflection-docblock": "^5.6.1",
@@ -20,8 +21,10 @@
     "symfony/asset-mapper": "6.4.*",
     "symfony/console": "6.4.*",
     "symfony/doctrine-messenger": "6.4.*",
+    "symfony/dom-crawler": "6.4.*",
     "symfony/dotenv": "6.4.*",
     "symfony/expression-language": "6.4.*",
+    "symfony/filesystem": "6.4.*",
     "symfony/flex": "^2",
     "symfony/form": "6.4.*",
     "symfony/framework-bundle": "6.4.*",
@@ -48,6 +51,7 @@
     "symfony/yaml": "6.4.*",
     "symfonycasts/verify-email-bundle": "^1.16",
     "twig/extra-bundle": "^3.0",
+    "twig/string-extra": "^3.19",
     "twig/twig": "^3.0"
   },
   "config": {

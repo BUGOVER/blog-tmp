@@ -6,6 +6,7 @@ namespace App\DataFixtures;
 
 use App\Dbal\Type\BlogStatus;
 use App\Entity\Blog;
+use App\Entity\Category;
 use App\Entity\Tag;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -29,16 +30,16 @@ class AppFixtures extends Fixture
         ini_set('max_execution_time', 60);
 
         $user = new User();
-        $user->setEmail('admin@yandex.ru');
+        $user->setEmail('admin@gmail.com');
         $user->setRoles(['ROLE_ADMIN']);
-        $password = $this->hasher->hashPassword($user, 'admin@yandex.ru');
+        $password = $this->hasher->hashPassword($user, 'admin@gmail.com');
         $user->setPassword($password);
         $manager->persist($user);
 
         $users = [];
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 200; $i++) {
             $user = new User();
-            $user->setEmail('user' . $i . '@yandex.ru');
+            $user->setEmail('user' . $i . '@gmail.com');
             $user->setRoles(['ROLE_USER']);
             $password = $this->hasher->hashPassword($user, 'pass_1234');
             $user->setPassword($password);
@@ -47,7 +48,7 @@ class AppFixtures extends Fixture
             $users[] = $user;
         }
 
-        for ($i = 0; $i < 1000; $i++) {
+        for ($i = 0; $i < 10000; $i++) {
             shuffle($users);
             foreach ($users as $item) {
                 $blog = (new Blog($item))
@@ -60,9 +61,14 @@ class AppFixtures extends Fixture
             }
         }
 
-        for ($i = 0; $i < 10; $i++) {
-            $tag = (new Tag())->setName(generateRandomString(7));
+        for ($i = 0; $i < 20; $i++) {
+            $tag = (new Tag())->setName(generateRandomString(random_int(3, 15)));
             $manager->persist($tag);
+        }
+
+        for ($i = 0; $i < 10; $i++) {
+            $category = (new Category())->setName(generateRandomString(random_int(3, 15)));
+            $manager->persist($category);
         }
 
         $manager->flush();

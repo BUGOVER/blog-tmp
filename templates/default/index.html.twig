@@ -8,12 +8,13 @@
       <p><a class="btn btn-primary btn-lg" href="#" role="button">{{ 'learn_more'|trans }}</a></p>
     </div>
   </div>
+  <h1>Hello, World</h1>
   <!-- Example row of columns -->
   <div class="row">
     {% for blog in blogs %}
       <div class="col-md-4">
         <h2>{{ blog.title }}</h2>
-        <p>{{ blog.text }}</p>
+        <p>{{ blog.text | u.truncate(30, '...') }}</p>
         {% if is_granted('ROLE_ADMIN') %}
           <p><a class="btn btn-secondary" href="{{ url('app_blog_show', {'id': blog.id}) }}"
                 role="button">{{ 'view_details'|trans }}</a></p>

@@ -1,9 +1,9 @@
 when@dev: &dev
   zenstruck_foundry:
     make_story:
-      default_namespace: Factory
+      default_namespace: App\Tests\Factory
 
     make_factory:
-      default_namespace: Factory
+      default_namespace: App\Tests\Factory
 
 when@test: *dev
