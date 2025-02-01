@@ -9,6 +9,7 @@ use App\Dbal\Type\BlogStatus;
 use App\Repository\BlogRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
@@ -17,6 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BlogRepository::class)]
 #[ORM\HasLifecycleCallbacks]
+#[ORM\Table(name: 'blogs')]
 class Blog
 {
     use Timestampable;
@@ -62,9 +64,26 @@ class Blog
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private DateTime|null $blockedAt;
 
+    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'blog', orphanRemoval: true)]
+    #[ORM\OrderBy(['id' => 'DESC'])]
+    private Collection $comments;
+
     public function __construct(UserInterface|User $user)
     {
         $this->user = $user;
+        $this->comments = new ArrayCollection();
+    }
+
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function setComments(Collection $comments): Blog
+    {
+        $this->comments = $comments;
+
+        return $this;
     }
 
     public function getBlockedAt(): ?DateTime

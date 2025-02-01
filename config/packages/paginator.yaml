@@ -1,6 +1,6 @@
 knp_paginator:
   page_range: 6
-  page_limit: 5000
+  page_limit: 10000
   convert_exception: false
   remove_first_page_param: false
   default_options:

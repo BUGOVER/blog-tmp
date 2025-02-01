@@ -13,3 +13,9 @@ http:
   daemon: true # Run the server in the background
   use_gzip: true # Toggle GZIP compression
   no_workers: true # Do not start workers
+
+workers:
+  messenger_consume_async: ~
+  build_spa:
+    cmd: [ 'npm', '--cwd', './spa/', 'dev' ]
+  docker_compose: ~

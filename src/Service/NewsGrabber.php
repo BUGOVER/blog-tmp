@@ -12,6 +12,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Log\LoggerInterface;
 use Random\RandomException;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\DomCrawler\Crawler;
 
 class NewsGrabber
@@ -21,7 +22,8 @@ class NewsGrabber
     public function __construct(
         private readonly UserRepository $userRepository,
         private readonly EntityManagerInterface $entityManager,
-        private readonly Client $client
+        private readonly Client $httpClient,
+        private readonly ParameterBagInterface $parameterBag,
     )
     {
     }
@@ -41,7 +43,7 @@ class NewsGrabber
         $this->logger->info('STARTED');
 
         try {
-            $response = $this->client->get(
+            $response = $this->httpClient->get(
                 'https://www.engadget.com/news/'
             );
         } catch (Exception $exception) {
@@ -62,7 +64,7 @@ class NewsGrabber
         $this->logger->info(\sprintf('Get %d texts', count($news)));
 
         foreach ($news as &$item) {
-            $response = $this->client->get('https://www.engadget.com' . $item['url']);
+            $response = $this->httpClient->get('https://www.engadget.com' . $item['url']);
             $crawler = new Crawler($response->getBody()->getContents());
             $crawlerBody = $crawler->filter('div.caas-body')->first();
             try {
@@ -93,7 +95,7 @@ class NewsGrabber
      */
     private function updateBlogs(array $news): void
     {
-        $blogUser = $this->userRepository->find(65);
+        $blogUser = $this->userRepository->find($this->parameterBag->get('autoblog'));
 
         foreach ($news as $item) {
             $blog = new Blog(user: $blogUser);

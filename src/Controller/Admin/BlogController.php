@@ -8,6 +8,7 @@ use App\Entity\Blog;
 use App\Filter\BlogFilter;
 use App\Form\BlogFilterType;
 use App\Form\BlogType;
+use App\Form\CommentType;
 use App\Repository\BlogRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -63,8 +64,14 @@ class BlogController extends AbstractController
     #[Route('/{id}', name: 'app_blog_show', methods: ['GET'])]
     public function show(Blog $blog): Response
     {
+        $form = $this->createForm(
+            type: CommentType::class,
+            options: ['action' => $this->generateUrl('store_comment', ['blog' => $blog->getId()])]
+        );
+
         return $this->render('blog/show.html.twig', [
             'blog' => $blog,
+            'form' => $form->createView(),
         ]);
     }
 

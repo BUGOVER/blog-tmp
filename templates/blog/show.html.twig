@@ -5,6 +5,11 @@
 {% block body %}
   <h1>Blog</h1>
 
+  <div class="alert-link float-right">
+    <a href="{{ path('app_blog_index') }}" class="mr-3 text-success">back to list</a>
+    <a href="{{ path('app_blog_edit', {'id': blog.id}) }}" class="text-success">edit</a>
+  </div>
+
   <table class="table">
     <tbody>
     <tr>
@@ -32,9 +37,24 @@
     </tbody>
   </table>
 
-  <a href="{{ path('app_blog_index') }}" class="mr-3">back to list</a>
+  <hr>
 
-  <a href="{{ path('app_blog_edit', {'id': blog.id}) }}">edit</a>
+  {% for comment in blog.comments %}
+    {% if 0 == comment.parentComment|length %}
+      <span>{{ comment.text }}</span>
+      <p class="ml-3">{{ comment.author.email }}</p>
+    {% else %}
+      {% for childrenComment in comment.childrenComments %}
+        <span>{{ childrenComment.text }}</span>
+        <p class="ml-3">{{ comment.author.email }}</p>
+      {% endfor %}
+    {% endif %}
+  {% endfor %}
+
+  {{ form_start(form) }}
+  {{ form_widget(form) }}
+  <button class="btn btn-primary float-right">Add</button>
+  {{ form_end(form) }}
 
   {{ include('blog/_delete_form.html.twig') }}
 {% endblock %}

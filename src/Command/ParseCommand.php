@@ -8,7 +8,9 @@ use App\Service\NewsGrabber;
 use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Logger\ConsoleLogger;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -25,6 +27,9 @@ class ParseCommand extends Command
 
     protected function configure(): void
     {
+        $this
+            ->addArgument('count', InputArgument::OPTIONAL)
+            ->addOption('dryRun', null, InputOption::VALUE_OPTIONAL);
     }
 
     /**
