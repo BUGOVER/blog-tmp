@@ -203,4 +203,24 @@ class Blog
 
         return $this;
     }
+
+    /**
+     * @param Comment $comment
+     * @return $this
+     */
+    public function addComment(Comment $comment): static
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+            $comment->setBlog($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment)
+    {
+        if ($this->comments->removeElement($comment)) {
+        }
+    }
 }

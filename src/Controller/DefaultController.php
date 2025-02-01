@@ -20,7 +20,7 @@ class DefaultController extends AbstractController
         return $this->render(
             view: 'default/index.html.twig',
             parameters: ['blogs' => $blogRepository->getBlogs()],
-            response: new Response('Success')
+            response: new Response('Success'),
         );
     }
 }

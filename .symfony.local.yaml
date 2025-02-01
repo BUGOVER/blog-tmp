@@ -5,8 +5,8 @@ proxy:
 http:
   document_root: public/ # Path to the project document root
   passthru: index.php # Project passthru index
-  port: 8000 # Force the port that will be used to run the server
-  preferred_port: 8001 # Preferred HTTP port [default: 8000]
+  port: 8010 # Force the port that will be used to run the server
+  preferred_port: 8011 # Preferred HTTP port [default: 8000]
   p12: /home/artak/.symfony5/certs/default.p12
   allow_http: true # Prevent auto-redirection from HTTP to HTTPS
   no_tls: false # Use HTTP instead of HTTPS
