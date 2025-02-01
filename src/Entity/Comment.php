@@ -23,7 +23,7 @@ class Comment
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'childrenComments')]
+    #[ORM\ManyToOne(targetEntity: Comment::class, inversedBy: 'childrenComments')]
     #[ORM\JoinColumn(name: 'parent_id', referencedColumnName: 'id', nullable: false)]
 //    #[ORM\Column(name: 'parent_id', type: Types::INTEGER, nullable: true)]
     private ?Comment $parentComment = null;
