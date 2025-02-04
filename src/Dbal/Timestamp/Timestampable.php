@@ -7,6 +7,7 @@ namespace App\Dbal\Timestamp;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Ignore;
 
 trait Timestampable
 {
@@ -41,7 +42,8 @@ trait Timestampable
     }
 
     #[ORM\PrePersist]
-    public function setCreatedAtAutomatically()
+    #[Ignore]
+    public function setCreatedAtAutomatically(): void
     {
         if (null === $this->getCreatedAt()) {
             $this->setCreatedAt(new DateTimeImmutable());
@@ -49,6 +51,7 @@ trait Timestampable
     }
 
     #[ORM\PreUpdate]
+    #[Ignore]
     public function setUpdatedAtAutomatically(): void
     {
         $this->setUpdatedAt(new DateTimeImmutable());

@@ -12,6 +12,7 @@ security:
       entity:
         class: App\Entity\User
         property: email
+
   firewalls:
     dev:
       pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -20,6 +21,9 @@ security:
       lazy: true
       provider: app_user_provider
       security: true
+
+      json_login:
+        check_path: api_login
 
       form_login:
         # "app_login" is the name of the route created previously.
@@ -45,6 +49,7 @@ security:
   access_control:
     - { path: ^/admin, roles: ROLE_ADMIN }
     - { path: ^/user, roles: ROLE_USER }
+    - { path: ^/api, roles: [ ROLE_USER, ROLE_ADMIN ] }
 
 when@test:
   security:

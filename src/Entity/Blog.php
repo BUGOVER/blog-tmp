@@ -68,7 +68,7 @@ class Blog
     #[ORM\OrderBy(['id' => 'DESC'])]
     private Collection $comments;
 
-    public function __construct(UserInterface|User $user)
+    public function __construct(UserInterface|User|null $user)
     {
         $this->user = $user;
         $this->comments = new ArrayCollection();

@@ -39,9 +39,11 @@
         <a class="nav-link" href="{{ url('blog_default') }}">Home <span
             class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ url('app_user_index') }}">Users</a>
-      </li>
+      {% if is_granted('ROLE_ADMIN') %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url('app_user_index') }}">Users</a>
+        </li>
+      {% endif %}
       <li class="nav-item">
         {% if is_granted('ROLE_ADMIN') %}
           <a class="nav-link" href="{{ path('app_blog_index') }}">Blog</a>

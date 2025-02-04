@@ -8,7 +8,7 @@ use Symfony\Component\Translation\DataCollectorTranslator;
 
 class ContentWatchApi
 {
-    private const API_URL = 'https://content-watch.ru/api/request/';
+    private const string API_URL = 'https://content-watch.ru/api/request/';
 
     /* @noinspection PhpPropertyOnlyWrittenInspection */
     public function __construct(

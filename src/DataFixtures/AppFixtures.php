@@ -75,8 +75,10 @@ class AppFixtures extends Fixture
             }
         }
 
+        shuffle($blogs);
+
         /* @var Blog $blog */
-        foreach (\array_slice($blogs, 0, 100) as $blog) {
+        foreach (\array_slice($blogs, 0, 300) as $blog) {
             for ($i = 0; $i < 3; $i++) {
                 $comment = (new Comment())
                     ->setText(generateRandomString(random_int(15, 100)))

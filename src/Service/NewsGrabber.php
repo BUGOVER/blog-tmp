@@ -10,11 +10,14 @@ use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use Monolog\Attribute\WithMonologChannel;
 use Psr\Log\LoggerInterface;
 use Random\RandomException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\DomCrawler\Crawler;
+use Symfony\Contracts\Service\Attribute\Required;
 
+#[WithMonologChannel('parser')]
 class NewsGrabber
 {
     private LoggerInterface $logger;
@@ -28,6 +31,7 @@ class NewsGrabber
     {
     }
 
+    #[Required]
     public function setLogger(LoggerInterface $logger): NewsGrabber
     {
         $this->logger = $logger;
@@ -61,7 +65,7 @@ class NewsGrabber
         });
         unset($crawler);
 
-        $this->logger->info(\sprintf('Get %d texts', count($news)));
+        $this->logger->info('Get texts {count}', ['count' => count($news)]);
 
         foreach ($news as &$item) {
             $response = $this->httpClient->get('https://www.engadget.com' . $item['url']);

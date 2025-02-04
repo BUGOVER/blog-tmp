@@ -38,7 +38,9 @@
             ? path('app_blog_edit', {'id': blog.id})
             : path('app_user_blog_edit', {'id': blog.id}) }}">Edit</a>
         </td>
-        <td><a href="{{ path('app_blog_show', {'id': blog.id}) }}">Show</a>
+        <td><a href="{{ is_granted('ROLE_ADMIN')
+          ? path('app_blog_show', {'id': blog.id})
+          : path('blog_show', {'id': blog.id}) }}">Show</a>
         </td>
       </tr>
     {% else %}

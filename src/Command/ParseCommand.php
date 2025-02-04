@@ -8,6 +8,7 @@ use App\Service\NewsGrabber;
 use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Command\LockableTrait;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -20,6 +21,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class ParseCommand extends Command
 {
+    use LockableTrait;
+
     public function __construct(private readonly NewsGrabber $grabber)
     {
         parent::__construct();
@@ -37,11 +40,14 @@ class ParseCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $logger = new ConsoleLogger($output);
+        if ($output->isVerbose()) {
+            $logger = new ConsoleLogger($output);
+            $this->grabber->setLogger($logger);
+        }
 
-        $this->grabber
-            ->setLogger($logger)
-            ->importNews();
+        $this->grabber->importNews();
+
+        $this->release();
 
         return Command::SUCCESS;
     }

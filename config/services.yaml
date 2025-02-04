@@ -35,3 +35,17 @@ services:
   App\Service\NewsGrabber:
     $httpClient: '@guzzle.client'
 
+
+  app.normalizer.object_normalizer:
+    class: Symfony\Component\Serializer\Normalizer\ObjectNormalizer
+    tags: [ 'serializer.normalizer' ]
+    arguments:
+      $propertyInfoExtractor: null
+      $defaultContext:
+        circular_reference_handler: '@App\Serializer\CircularReferenceHandler'
+        ignore_attributes: [ ]
+        callbacks: {
+          'createdAt': '@App\Serializer\DateAtCallback',
+          'updatedAt': '@App\Serializer\DateAtCallback',
+          'deletedAt': '@App\Serializer\DateAtCallback',
+        }

@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Middleware([SampleMiddleware::class])]
-class DefaultController extends AbstractController
+final class DefaultController extends AbstractController
 {
     #[Route('/', name: 'blog_default')]
     public function __invoke(BlogRepository $blogRepository): Response

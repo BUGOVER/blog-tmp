@@ -6,12 +6,14 @@ namespace App\Dbal\Event\Migration;
 
 use App\Dbal\Grammar\PgSql\BlogStatusType;
 use App\Dbal\Type\BlogStatus;
+use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\DBAL\Exception;
 use Doctrine\Migrations\Event\MigrationsEventArgs;
 use Doctrine\Migrations\Events;
 use Doctrine\ORM\EntityManagerInterface;
 
+#[AsDoctrineListener(Events::onMigrationsMigrating)]
 class Lifecicle implements EventSubscriber
 {
     public function __construct(private readonly EntityManagerInterface $entityManager)
@@ -22,7 +24,6 @@ class Lifecicle implements EventSubscriber
     {
         return [
             Events::onMigrationsMigrating,
-            Events::onMigrationsVersionExecuting,
         ];
     }
 

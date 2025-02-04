@@ -14,6 +14,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -33,7 +34,7 @@ class BlogType extends AbstractType
         $builder
             ->add('title', TextType::class, [
                 'required' => true,
-                'help' => 'Заполните заголовок текста',
+                'help' => 'Fill in the heading of the text',
                 'attr' => [
                     'class' => 'myclass',
                 ],
@@ -54,7 +55,7 @@ class BlogType extends AbstractType
                     },
                     'required' => false,
                     'empty_data' => '',
-                    'placeholder' => '-- выбор категории --',
+                    'placeholder' => '-- Choosing a category --',
                 ])
                 ->add('user', EntityType::class, [
                     'class' => User::class,
@@ -64,14 +65,10 @@ class BlogType extends AbstractType
                     'required' => false,
                     'empty_data' => '',
                     'choice_label' => 'emailFormatted',
-                    'placeholder' => '-- выбор пользователя --',
+                    'placeholder' => '-- User choice --',
                 ])
-                ->add('status', ChoiceType::class, [
-                    'choices' => [
-                        BlogStatus::pending->value => BlogStatus::pending,
-                        BlogStatus::active->value => BlogStatus::active,
-                        BlogStatus::blocked->value => BlogStatus::blocked,
-                    ],
+                ->add('status', EnumType::class, [
+                    'class' => BlogStatus::class,
                 ]);
         }
 
@@ -88,6 +85,7 @@ class BlogType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Blog::class,
+            'csrf_protection' => false,
         ]);
     }
 }
