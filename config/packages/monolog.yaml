@@ -18,6 +18,7 @@ when@dev:
         process_psr_3_messages: true #Context data in the message body
         channels: [ "parser" ]
         max_files: 10
+        formatter: monolog.formatter.logstash
       # uncomment to get logging in your browser
       # you may have to allow bigger header sizes in your Web server configuration
       #firephp:
