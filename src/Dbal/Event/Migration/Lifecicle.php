@@ -40,8 +40,8 @@ class Lifecicle implements EventSubscriber
 
         $conn = $this->entityManager->getConnection();
 
-        $sqlType = "DROP TYPE IF EXISTS $type";
-        $conn->executeQuery($sqlType);
+//        $sqlType = "DROP TYPE IF EXISTS $type";
+//        $conn->executeQuery($sqlType);
 
         $sqlCommon = "DO
 $$

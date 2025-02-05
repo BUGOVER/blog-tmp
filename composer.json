@@ -16,6 +16,7 @@
     "guzzlehttp/guzzle": "^7.9",
     "kafkiansky/symfony-middleware": "^0.4.0",
     "knplabs/knp-paginator-bundle": "^6.3.0",
+    "lexik/jwt-authentication-bundle": "^3.1",
     "phpdocumentor/reflection-docblock": "^5.6.1",
     "phpstan/phpdoc-parser": "^2.0.0",
     "symfony/asset": "6.4.*",

@@ -68,10 +68,25 @@ class Blog
     #[ORM\OrderBy(['id' => 'DESC'])]
     private Collection $comments;
 
+    #[ORM\OneToOne(targetEntity: BlogMeta::class, mappedBy: 'blog')]
+    private ?BlogMeta $meta = null;
+
     public function __construct(UserInterface|User|null $user)
     {
         $this->user = $user;
         $this->comments = new ArrayCollection();
+    }
+
+    public function getMeta(): ?BlogMeta
+    {
+        return $this->meta;
+    }
+
+    public function setMeta(?BlogMeta $meta): Blog
+    {
+        $this->meta = $meta;
+
+        return $this;
     }
 
     public function getComments(): Collection
