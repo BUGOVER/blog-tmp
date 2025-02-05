@@ -68,7 +68,7 @@ class Blog
     #[ORM\OrderBy(['id' => 'DESC'])]
     private Collection $comments;
 
-    #[ORM\OneToOne(targetEntity: BlogMeta::class, mappedBy: 'blog')]
+    #[ORM\OneToOne(targetEntity: BlogMeta::class, mappedBy: 'blog', cascade: ['persist'])]
     private ?BlogMeta $meta = null;
 
     public function __construct(UserInterface|User|null $user)
@@ -84,6 +84,7 @@ class Blog
 
     public function setMeta(?BlogMeta $meta): Blog
     {
+        $meta?->setBlog($this);
         $this->meta = $meta;
 
         return $this;
@@ -233,9 +234,8 @@ class Blog
         return $this;
     }
 
-    public function removeComment(Comment $comment)
+    public function removeComment(Comment $comment): bool
     {
-        if ($this->comments->removeElement($comment)) {
-        }
+        return $this->comments->removeElement($comment);
     }
 }
