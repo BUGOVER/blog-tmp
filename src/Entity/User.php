@@ -31,6 +31,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(name: 'email', type: Types::STRING, length: 180, unique: true)]
     private ?string $email = null;
 
+    #[ORM\Column(name: 'full_name', type: Types::STRING, length: 180, unique: false, nullable: true)]
+    private ?string $fullName = null;
+
+    public function getFullName(): ?string
+    {
+        return $this->fullName;
+    }
+
+    public function setFullName(?string $fullName): User
+    {
+        $this->fullName = $fullName;
+
+        return $this;
+    }
+
     #[ORM\Column(name: 'roles', type: Types::JSON)]
     private array $roles = [];
 

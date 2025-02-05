@@ -68,7 +68,7 @@ class Blog
     #[ORM\OrderBy(['id' => 'DESC'])]
     private Collection $comments;
 
-    #[ORM\OneToOne(targetEntity: BlogMeta::class, mappedBy: 'blog', cascade: ['persist'])]
+    #[ORM\OneToOne(targetEntity: BlogMeta::class, mappedBy: 'blog', cascade: ['persist', 'remove'])]
     private ?BlogMeta $meta = null;
 
     public function __construct(UserInterface|User|null $user)
