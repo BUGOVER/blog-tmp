@@ -25,7 +25,6 @@ class Comment
 
     #[ORM\ManyToOne(targetEntity: Comment::class, inversedBy: 'childrenComments')]
     #[ORM\JoinColumn(name: 'parent_id', referencedColumnName: 'id', nullable: true)]
-//    #[ORM\Column(name: 'parent_id', type: Types::INTEGER, nullable: true)]
     private ?Comment $parentComment = null;
 
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'parentComment', orphanRemoval: true)]

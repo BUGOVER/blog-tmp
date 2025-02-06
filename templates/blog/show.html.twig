@@ -2,9 +2,9 @@
 {% block title %}Blog{% endblock %}
 
 {% block meta_data %}
-  <meta name="description" content="{{ blog.meta.description }}">
-  <meta name="keywords" content="{{ blog.meta.keywords }}">
-  <meta name="author" content="{{ blog.meta.author }}">
+  <meta name="description" content="{{ blog.meta.description|default('') }}">
+  <meta name="keywords" content="{{ blog.meta.keywords|default('') }}">
+  <meta name="author" content="{{ blog.meta.author|default('') }}">
 {% endblock %}
 
 {% block body %}
