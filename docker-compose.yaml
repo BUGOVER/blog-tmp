@@ -1,0 +1,202 @@
+services:
+
+  # --- WEB Configuration ---
+  fpm:
+    build:
+      context: ./docker/php-fpm
+      dockerfile: Dockerfile-php
+    environment:
+      - DATABASE_URL=postgresql://postgres:12345@postgresql/app?serverVersion=17&charset=utf8
+    volumes:
+      - ./:/var/www/project/:cached
+    networks:
+      - symfony
+
+  nginx:
+    build:
+      context: ./docker/php-fpm
+      dockerfile: Dockerfile-nginx
+    volumes:
+      - ./:/var/www/project/:cached
+    ports:
+      - 10302:80
+    networks:
+      - symfony
+
+  postgresql:
+    image: docker.io/bitnami/postgresql:17
+    ports:
+      - '5432:5432'
+    volumes:
+      - 'postgresql_data:/bitnami/postgresql'
+    environment:
+      POSTGRES_DB: app
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345
+    networks:
+      - symfony
+
+  redis:
+    image: docker.io/bitnami/redis:7.4
+    environment:
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      - ALLOW_EMPTY_PASSWORD=yes
+      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
+    ports:
+      - '6379:6379'
+    volumes:
+      - 'redis_data:/bitnami/redis/data'
+    networks:
+      - symfony
+
+  rabbitmq:
+    image: docker.io/bitnami/rabbitmq:4.0
+    ports:
+      - '4369:4369'
+      - '5551:5551'
+      - '5552:5552'
+      - '5672:5672'
+      - '25672:25672'
+      - '15672:15672'
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+    volumes:
+      - 'rabbitmq_data:/bitnami/rabbitmq/mnesia'
+    networks:
+      - symfony
+
+  # --- Minio ---
+  minio:
+    image: docker.io/bitnami/minio:latest
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    networks:
+      - symfony
+    volumes:
+      - 'minio_data:/data'
+    environment:
+      - MINIO_ROOT_USER=${MINIO_ROOT_USER}
+      - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD}
+      - MINIO_DEFAULT_BUCKETS=${MINIO_DEFAULT_BUCKETS}
+
+  mailcatcher:
+    restart: on-failure
+    image: dockage/mailcatcher:0.9.0
+    ports:
+      - "1080:1080"
+      - "1025:1025"
+    networks:
+      - symfony
+
+  # --- ELK CONFIGURATION ---
+  setup:
+    profiles:
+      - setup
+    build:
+      context: docker/setup/
+      args:
+        ELASTIC_VERSION: ${ELASTIC_VERSION}
+    init: true
+    volumes:
+      - ./docker/setup/entrypoint.sh:/entrypoint.sh:ro,Z
+      - ./docker/setup/lib.sh:/lib.sh:ro,Z
+      - ./docker/setup/roles:/roles:ro,Z
+    environment:
+      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-}
+      LOGSTASH_INTERNAL_PASSWORD: ${LOGSTASH_INTERNAL_PASSWORD:-}
+      KIBANA_SYSTEM_PASSWORD: ${KIBANA_SYSTEM_PASSWORD:-}
+      METRICBEAT_INTERNAL_PASSWORD: ${METRICBEAT_INTERNAL_PASSWORD:-}
+      FILEBEAT_INTERNAL_PASSWORD: ${FILEBEAT_INTERNAL_PASSWORD:-}
+      HEARTBEAT_INTERNAL_PASSWORD: ${HEARTBEAT_INTERNAL_PASSWORD:-}
+      MONITORING_INTERNAL_PASSWORD: ${MONITORING_INTERNAL_PASSWORD:-}
+      BEATS_SYSTEM_PASSWORD: ${BEATS_SYSTEM_PASSWORD:-}
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
+
+  elasticsearch:
+    build:
+      context: docker/elasticsearch/
+      args:
+        ELASTIC_VERSION: ${ELASTIC_VERSION}
+    volumes:
+      - ./docker/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,Z
+      - elasticsearch:/usr/share/elasticsearch/data:Z
+    ports:
+      - 9200:9200
+      - 9300:9300
+    environment:
+      node.name: elasticsearch
+      ES_JAVA_OPTS: -Xms512m -Xmx512m
+      # Bootstrap password.
+      # Used to initialize the keystore during the initial startup of
+      # Elasticsearch. Ignored on subsequent runs.
+      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-}
+      # Use single node discovery in order to disable production mode and avoid bootstrap checks.
+      # see: https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
+      discovery.type: single-node
+    networks:
+      - elk
+    restart: unless-stopped
+
+  logstash:
+    build:
+      context: docker/logstash/
+      args:
+        ELASTIC_VERSION: ${ELASTIC_VERSION}
+    volumes:
+      - ./docker/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro,Z
+      - ./docker/logstash/pipeline:/usr/share/logstash/pipeline:ro,Z
+    ports:
+      - 5044:5044
+      - 50000:50000/tcp
+      - 50000:50000/udp
+      - 9600:9600
+    environment:
+      LS_JAVA_OPTS: -Xms256m -Xmx256m
+      LOGSTASH_INTERNAL_PASSWORD: ${LOGSTASH_INTERNAL_PASSWORD:-}
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
+    restart: unless-stopped
+
+  kibana:
+    build:
+      context: docker/kibana/
+      args:
+        ELASTIC_VERSION: ${ELASTIC_VERSION}
+    volumes:
+      - ./docker/kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro,Z
+    ports:
+      - 5601:5601
+    environment:
+      KIBANA_SYSTEM_PASSWORD: ${KIBANA_SYSTEM_PASSWORD:-}
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
+    restart: unless-stopped
+
+networks:
+  elk:
+    driver: bridge
+  symfony:
+    driver: bridge
+
+volumes:
+  postgresql_data:
+    driver: local
+  mysql_data:
+    driver: local
+  redis_data:
+    driver: local
+  rabbitmq_data:
+    driver: local
+  minio_data:
+    driver: local
+  elasticsearch:
+    driver: local
