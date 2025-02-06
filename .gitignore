@@ -33,7 +33,7 @@
 ###< friendsofphp/php-cs-fixer ###
 
 ###> Docker
-/docker-compose.yaml
+/docker.yaml
 /.data
 ###> Docker
 
