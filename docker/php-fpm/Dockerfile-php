@@ -21,6 +21,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         gd \
         intl
 
+RUN apk add --no-cache $PHPIZE_DEPS linux-headers && \
+    pecl install xdebug && docker-php-ext-enable xdebug
+
 COPY build/php/opcache.ini /usr/local/etc/php/conf.d/
 COPY build/php/custom.ini /usr/local/etc/php/conf.d/
 

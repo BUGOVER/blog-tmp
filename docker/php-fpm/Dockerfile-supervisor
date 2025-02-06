@@ -1,0 +1,8 @@
+FROM php:8.3-cli
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        supervisor
+
+# Set USER
+RUN useradd -ms /bin/bash project
+USER project
+WORKDIR /var/www/project
