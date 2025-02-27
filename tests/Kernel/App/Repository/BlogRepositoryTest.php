@@ -14,7 +14,6 @@ use Zenstruck\Foundry\Test\ResetDatabase;
 class BlogRepositoryTest extends KernelTestCase
 {
     use Factories;
-
     use ResetDatabase;
 
     public function testSomething(): void

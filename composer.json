@@ -13,6 +13,7 @@
     "doctrine/doctrine-bundle": "^2.13",
     "doctrine/doctrine-migrations-bundle": "^3.4.0",
     "doctrine/orm": "^3.3.1",
+    "gos/web-socket-bundle": "*",
     "guzzlehttp/guzzle": "^7.9",
     "kafkiansky/symfony-middleware": "^0.4.0",
     "knplabs/knp-paginator-bundle": "^6.3.0",

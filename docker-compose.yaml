@@ -9,6 +9,7 @@ services:
       - DATABASE_URL=postgresql://postgres:12345@postgresql/app?serverVersion=17&charset=utf8
     volumes:
       - ./:/var/www/project/:cached
+      - "./docker/php-fpm/extensions/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini"
     networks:
       - symfony
     depends_on:

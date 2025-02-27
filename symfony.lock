@@ -50,6 +50,12 @@
             ".php-cs-fixer.dist.php"
         ]
     },
+    "gos/pubsub-router-bundle": {
+        "version": "v2.8.0"
+    },
+    "gos/web-socket-bundle": {
+        "version": "v3.15.0"
+    },
     "knplabs/knp-paginator-bundle": {
         "version": "v6.3.0"
     },
